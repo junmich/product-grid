@@ -9,6 +9,8 @@ class Products extends React.Component {
         hasMore: true,
         loading: false,
         pageNumber: 1,
+        sortBy: 'id',
+        sortSelection: ['id', 'size', 'price'],
     };
     componentWillMount() {
         this.loadProducts();
@@ -17,9 +19,9 @@ class Products extends React.Component {
         window.addEventListener('scroll', this.handleScroll);
     }
     loadProducts = () => {
-        const { pageNumber } = this.state;
+        const { pageNumber, sortBy } = this.state;
         this.setState({loading: true});
-        fetch(`/products?_page=${pageNumber}&_limit=15`)
+        fetch(`/products?_page=${pageNumber}&_limit=15&_sort=${sortBy}`)
             .then(response => response.json())
             .then(data => {
                 console.log('hasmore', data.length);
@@ -44,12 +46,19 @@ class Products extends React.Component {
             this.loadProducts();
         }
     }
+    handleChange = event => {
+        this.setState({[event.target.name]: event.target.value, products: [], pageNumber: 1});
+    }
     render() {
-        const {loading, products, hasMore} = this.state;
+        console.log(this.state);
+        const {loading, products, hasMore, sortBy, sortSelection } = this.state;
         const loadingElement = loading ? <Loading /> : null;
         const endOfCatalog = hasMore ? null : <div>End Of Catalog</div>;
         return (
             <section className="products">
+                <select name="sortBy" value={sortBy} onChange={this.handleChange}>
+                    {sortSelection.map(selection => <option value={selection}>{selection}</option>)}
+                </select>
                 {products.map(product  => (
                     <Fragment key={product.id}>
                         <hr />
