@@ -32,7 +32,7 @@ class Ads extends React.Component {
         const { ad } = this.state;
         return (
             <div>
-                <Countdown text={"Ad will change in "} />
+                {/*<Countdown text={"Ad will change in "} />*/}
                 <img alt="" src={`/ads?r=${ad}}`} />
             </div>
         )

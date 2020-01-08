@@ -8,10 +8,10 @@ import './style/main.css'; // demonstrate css loader
 class App extends React.Component {
     componentDidMount()
     {
-        console.log('amount test');
-        fetch('/products')
-            .then(response => response.json())
-            .then(data => console.log(data));
+        // console.log('amount test');
+        // fetch('/products')
+        //     .then(response => response.json())
+        //     .then(data => console.log(data));
     }
     render() {
         return (
