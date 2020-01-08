@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import Loading from './Loading';
+import { getRelativeTime } from '../utills/helper';
 import '../style/main.css';
 
 class Products extends React.Component {
@@ -54,9 +55,9 @@ class Products extends React.Component {
                         <hr />
                         <div style={{ display: 'flex' }}>
                             <div>
-                                <p>{product.face}</p>
+                                <p style={{ size: product.size }}>{product.face}</p>
                                 <p>{product.price}</p>
-                                <p>{product.date}</p>
+                                <p>{getRelativeTime(new Date(), new Date(product.date))}</p>
                             </div>
                         </div>
                     </Fragment>
