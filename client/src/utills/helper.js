@@ -22,4 +22,6 @@ const getRelativeTime = (current, previous) => {
     }
 };
 
-export { getRelativeTime };
+const formatPrice = amount => `$ ${amount.toFixed(2)}`;
+
+export { getRelativeTime, formatPrice};

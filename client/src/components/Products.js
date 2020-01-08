@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import Loading from './Loading';
-import { getRelativeTime } from '../utills/helper';
+import { getRelativeTime, formatPrice } from '../utills/helper';
 import '../style/main.css';
 
 class Products extends React.Component {
@@ -53,10 +53,10 @@ class Products extends React.Component {
                 {products.map(product  => (
                     <Fragment key={product.id}>
                         <hr />
-                        <div style={{ display: 'flex' }}>
+                        <div style={{ display: 'flex', textAlign: 'left' }}>
                             <div>
                                 <p style={{ size: product.size }}>{product.face}</p>
-                                <p>{product.price}</p>
+                                <p>{formatPrice(product.price)}</p>
                                 <p>{getRelativeTime(new Date(), new Date(product.date))}</p>
                             </div>
                         </div>
