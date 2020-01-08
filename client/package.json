@@ -7,6 +7,7 @@
     "start": "webpack-dev-server --open --hot --mode development",
     "build": "webpack --mode production"
   },
+  "proxy": "http://localhost:3000/",
   "author": "Rodolfo Borgonos<rodolfoborgonos@gmail.com>",
   "devDependencies": {
     "@babel/core": "^7.0.0",

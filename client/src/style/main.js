@@ -11,3 +11,10 @@ export const header = {
   fontSize: 25,
   textAlign: 'center',
 };
+
+export const content = {
+  margin: 10,
+  marginBottom: 30,
+  fontSize: 18,
+  textAlign: 'left',
+};

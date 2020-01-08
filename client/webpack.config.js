@@ -21,10 +21,12 @@ module.exports = {
         extensions: ['*', '.js', '.jsx']
     },
     output: {
-        filename: 'index.js', // place where bundled app will be served
+        path: path.resolve(__dirname, '../public'),
+        filename: 'bundle-react.js', // place where bundled app will be served
     },
     devServer: {
         inline: true, // autorefresh
-        port: 8080 // development port server
+        port: 8080, // development port server
+        proxy: { "/**": { target: 'http://localhost:3000', secure: false }  }
     },
 };
