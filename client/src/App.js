@@ -87,6 +87,7 @@ class App extends React.Component {
             pageNumber: 1,
             loading: true,
             hasMoreProduct: true,
+            hasMore: true,
             productsInterval
         });
         this.initialLoad();
