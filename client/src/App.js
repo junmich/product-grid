@@ -5,7 +5,7 @@ import { Header, Description, Ads, Products } from './components'; // updated im
 import { container } from './style/main'; // demonstrate react js style
 import './style/main.css'; // demonstrate css loader
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {getRelativeTime, formatPrice, chunkArray} from './utills/helper';
+import { chunkArray } from './utills/helper';
 
 class App extends React.Component {
     state = {
@@ -155,11 +155,20 @@ class App extends React.Component {
                     <Description>
                         But first, a word from our sponsors:
                         <Ads ad={this.state.ad} />
-                        <select className="form-control" name="sortBy" value={sortBy} onChange={this.handleChange}>
-                            {sortSelection.map(selection => <option key={selection} value={selection}>{selection}</option>)}
-                        </select>
-                        <button type="button" onClick={this.sortProduct}>Sort</button>
                     </Description>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-md-6">
+                                <select className="form-control" name="sortBy" value={sortBy} onChange={this.handleChange}>
+                                    {sortSelection.map(selection => <option key={selection} value={selection}>{selection.toUpperCase()}</option>)}
+                                </select>
+                            </div>
+                            <div className="col-md-6">
+                                <button type="button" className="btn btn-primary" onClick={this.sortProduct}>Sort Product</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
                 </header>
                 <div className="content">
                     <Products {...this.state} />

@@ -1,14 +1,15 @@
 export const container = {
   fontFamily: 'Verdana',
+  width: '100%',
   textAlign: 'center',
-  marginLeft: 20,
-  marginRight: 20,
 };
 
 export const header = {
-  margin: 10,
-  marginBottom: 30,
-  fontSize: 25,
+  paddingTop: 10,
+  color: '#fff',
+  backgroundColor: '#2E4272',
+  paddingBottom: 30,
+  fontSize: 35,
   textAlign: 'center',
 };
 
