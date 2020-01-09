@@ -1,39 +1,25 @@
 import React from 'react';
 import Countdown from './Countdown';
 import '../style/main.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class Ads extends React.Component {
-    state = {
-      ad: 0,
-      previousAd: 0,
-    };
-    componentWillMount() {
-        setInterval(this.retrieveAd, 20000);
+    constructor(props) {
+        super(props);
+        this.state = {...this.props};
     }
-    retrieveAd = () => {
-        const ad = this.getRandomAd();
+    componentWillReceiveProps(nextProps) {
+        // setInterval(this.retrieveAd, 20000);
         this.setState({
-            ad,
-            previousAd: ad,
+            ...nextProps
         });
     }
-    getRandomAd = () => {
-        const { previousAd } = this.state;
-        let randomAd = previousAd;
-        while (previousAd === randomAd) {
-            randomAd = Math.floor(Math.random()*1000);
-            if (randomAd !== previousAd) {
-                break;
-            }
-        }
-        return randomAd;
-    };
     render() {
         const { ad } = this.state;
         return (
             <div>
                 {/*<Countdown text={"Ad will change in "} />*/}
-                <img alt="" src={`/ads?r=${ad}}`} />
+                <img className="rounded mx-auto d-block" alt="" src={`/ads?r=${ad}}`} />
             </div>
         )
     };

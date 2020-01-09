@@ -5,11 +5,61 @@
     margin-bottom: 10px;
 }
 
+.content {
+    padding-top: 500px;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: #ffffff;
+    z-index: 1;
+}
+
 .products {
     border: 0px solid;
     margin: 2px;
 }
 
+/* grid */
+
+.grid-container {
+    /*display: grid;*/
+    /*grid-template-columns: auto auto auto;*/
+    /*background-color: #ebf3ea;*/
+    /*padding: 10px;*/
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.grid-item {
+    /*background-color: rgba(255, 255, 255, 0.8);*/
+    /*border: 1px solid rgba(0, 0, 0, 0.8);*/
+    /*padding: 20px;*/
+    /*text-align: center;*/
+    border: 1px solid;
+    width: calc((100% - 24px * 2) / 3);
+    margin-top: 5px;
+    margin-right: 5px;
+    float: left;
+}
+.grid-item:nth-child(3n+3) {
+    margin-right: 0;
+    float: right;
+}
+
+.grid-row {
+    display: row;
+}
+
+.grid-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
 /* -- loading -- */
 
 .lds-spinner {

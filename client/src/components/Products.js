@@ -1,76 +1,53 @@
 import React, { Fragment } from 'react';
 import Loading from './Loading';
-import { getRelativeTime, formatPrice } from '../utills/helper';
+import {getRelativeTime, formatPrice, chunkArray} from '../utills/helper';
 import '../style/main.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 class Products extends React.Component {
-    state = {
-        products: [],
-        hasMore: true,
-        loading: false,
-        pageNumber: 1,
-        sortBy: 'id',
-        sortSelection: ['id', 'size', 'price'],
+    constructor(props) {
+        super(props);
+        this.state = {
+            ...props,
+        };
+    }
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            ...nextProps
+        });
+    }
+    getProducts = () => {
+        const { products } = this.state;
+        return products.map(product  => (
+            <Fragment key={product.id}>
+                <div className="row">
+                    <div className="col-md-3">
+                        {product.id}
+                    </div>
+                    <div className="col-md-3">
+                        <span style={{ fontSize: product.size }}>{product.face}</span>
+                    </div>
+                    <div className="col-md-3">
+                        {formatPrice(product.price)}
+                    </div>
+                    <div className="col-md-3">
+                        {getRelativeTime(new Date(), new Date(product.date))}
+                    </div>
+                </div>
+            </Fragment>
+        ))
     };
-    componentWillMount() {
-        this.loadProducts();
-    }
-    componentDidMount() {
-        window.addEventListener('scroll', this.handleScroll);
-    }
-    loadProducts = () => {
-        const { pageNumber, sortBy } = this.state;
-        this.setState({loading: true});
-        fetch(`/products?_page=${pageNumber}&_limit=15&_sort=${sortBy}`)
-            .then(response => response.json())
-            .then(data => {
-                console.log('hasmore', data.length);
-                this.setState({
-                    products: [...this.state.products, ...data],
-                    hasMore: data.length === 15,
-                    loading: false,
-                    pageNumber: pageNumber+1,
-                })
-            });
-    }
-    handleScroll = (event) => {
-        const {loading, hasMore} = this.state;
-        if (loading || !hasMore) return;
-        // console.log(window.innerHeight, event.srcElement.documentElement.scrollTop, document.documentElement.offsetHeight)
-
-        // Checks that the page has scrolled to the bottom
-        if (
-            window.innerHeight + event.srcElement.documentElement.scrollTop
-            === document.documentElement.offsetHeight
-        ) {
-            this.loadProducts();
-        }
-    }
-    handleChange = event => {
-        this.setState({[event.target.name]: event.target.value, products: [], pageNumber: 1});
-    }
     render() {
         console.log(this.state);
         const {loading, products, hasMore, sortBy, sortSelection } = this.state;
         const loadingElement = loading ? <Loading /> : null;
-        const endOfCatalog = hasMore ? null : <div>End Of Catalog</div>;
+        const endOfCatalog = hasMore ? null : <div>~ End Of Catalog ~</div>;
         return (
             <section className="products">
-                <select name="sortBy" value={sortBy} onChange={this.handleChange}>
-                    {sortSelection.map(selection => <option value={selection}>{selection}</option>)}
-                </select>
-                {products.map(product  => (
-                    <Fragment key={product.id}>
-                        <hr />
-                        <div style={{ display: 'flex', textAlign: 'left' }}>
-                            <div>
-                                <p style={{ size: product.size }}>{product.face}</p>
-                                <p>{formatPrice(product.price)}</p>
-                                <p>{getRelativeTime(new Date(), new Date(product.date))}</p>
-                            </div>
-                        </div>
-                    </Fragment>
-                ))}
+                <div className="container">
+                    {this.getProducts()}
+                </div>
                 {loadingElement}
                 {endOfCatalog}
             </section>

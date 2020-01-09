@@ -22,6 +22,16 @@ const getRelativeTime = (current, previous) => {
     }
 };
 
+const chunkArray = (array, size) => {
+    const results = [];
+
+    while (array.length) {
+        results.push(array.splice(0, size));
+    }
+
+    return results;
+}
+
 const formatPrice = amount => `$ ${amount.toFixed(2)}`;
 
-export { getRelativeTime, formatPrice};
+export { getRelativeTime, formatPrice, chunkArray};

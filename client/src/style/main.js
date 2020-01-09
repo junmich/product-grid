@@ -14,7 +14,7 @@ export const header = {
 
 export const content = {
   margin: 10,
-  marginBottom: 30,
+  marginBottom: 20,
   fontSize: 18,
   textAlign: 'left',
 };
