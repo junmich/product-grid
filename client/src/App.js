@@ -26,34 +26,20 @@ class App extends React.Component {
         this.setState({[event.target.name]: event.target.value});
     };
     componentWillMount() {
-        const productsInterval = setInterval(this.loadProducts, 5000);
-        this.setState({ productsInterval });
-    }
-    componentWillReceiveProps(nextProps) {
-        const { sortBy, productsInterval } = this.state;
-        const nextSortBy = nextProps.sortBy;
-        if (sortBy !== nextSortBy) {
-            clearInterval(productsInterval);
-            const productsInterval = setInterval(this.loadProducts, 5000);
-            this.setState({
-                sortBy: nextSortBy,
-                products: [],
-                productsQueue: [],
-                pageNumber: 1,
-                loading: true,
-                hasMoreProduct: true,
-                productsInterval
-            });
-            this.initialLoad();
-        }
+        this.loadProducts();
     }
     componentDidMount() {
         this.initialLoad();
-        window.addEventListener('scroll', this.handleScroll);
     }
     initialLoad = () => {
+        // set products loading on background
+        const productsInterval = setInterval(this.loadProducts, 5000);
+        this.setState({ productsInterval });
+        // load initial product on queue
         const initialLoadInterval = setInterval(this.loadInitialProduct, 1000);
         this.setState({ initialLoadInterval });
+        // set on scroll handle
+        window.addEventListener('scroll', this.handleScroll);
     };
     loadInitialProduct = () => {
         const { initialLoadInterval, productsQueue } = this.state;
