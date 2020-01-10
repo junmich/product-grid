@@ -150,13 +150,21 @@ class App extends React.Component {
             <div style={container}>
                 <header className="sticky">
                     <Header title="Products Grid" />
-                    <Description>
-                        Here you're sure to find a bargain on some of the finest ascii available to purchase. Be sure to peruse our selection of ascii faces in an exciting range of sizes and prices.
-                    </Description>
-                    <Description>
-                        But first, a word from our sponsors:
-                        <Ads ad={this.state.ad} />
-                    </Description>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-md-6">
+                                <Description>
+                                    Here you're sure to find a bargain on some of the finest ascii available to purchase. Be sure to peruse our selection of ascii faces in an exciting range of sizes and prices.
+                                </Description>
+                            </div>
+                            <div className="col-md-6">
+                                <Description>
+                                    But first, a word from our sponsors:
+                                    <Ads ad={this.state.ad} />
+                                </Description>
+                            </div>
+                        </div>
+                    </div>
                     <div className="container">
                         <div className="row">
                             <div className="col-md-6">

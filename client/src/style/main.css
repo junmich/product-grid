@@ -6,7 +6,7 @@
 }
 
 .content {
-    padding-top: 500px;
+    padding-top: 350px;
 }
 
 .sticky {
@@ -45,7 +45,7 @@ button {
 
 @media only screen and (max-width: 770px) {
     .content {
-        padding-top: 600px;
+        padding-top: 550px;
     }
     button {
         margin-top: 10px !important;

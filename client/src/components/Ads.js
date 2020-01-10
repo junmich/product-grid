@@ -19,7 +19,7 @@ class Ads extends React.Component {
         return (
             <div>
                 {/*<Countdown text={"Ad will change in "} />*/}
-                <img className="rounded mx-auto d-block" alt="" src={`/ads?r=${ad}}`} />
+                <img className="rounded mx-auto" alt="" src={`/ads?r=${ad}}`} />
             </div>
         )
     };

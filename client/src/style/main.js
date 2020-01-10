@@ -9,13 +9,12 @@ export const header = {
   color: '#fff',
   backgroundColor: '#2E4272',
   paddingBottom: 10,
-  fontSize: 30,
+  fontSize: 20,
   textAlign: 'center',
 };
 
 export const content = {
   margin: 10,
-  marginBottom: 20,
   fontSize: 14,
   textAlign: 'left',
 };
