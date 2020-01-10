@@ -22,42 +22,46 @@ class App extends React.Component {
         ad: 1,
         previousAd: 0,
     };
-    handleChange = event => {
-        this.setState({[event.target.name]: event.target.value});
-    };
     componentWillMount() {
-        this.loadProducts();
+        this.loadProductsFromServer();
     }
     componentDidMount() {
         this.initialLoad();
     }
+    // use arrow function - because using arrow function, I don't need to bind each method
     initialLoad = () => {
-        // set products loading on background
-        const productsInterval = setInterval(this.loadProducts, 5000);
-        this.setState({ productsInterval });
-        // load initial product on queue
-        const initialLoadInterval = setInterval(this.loadInitialProduct, 1000);
-        this.setState({ initialLoadInterval });
+        this.setRequestingProductOnBackground();
+        this.setInitialProductLoading();
         // set on scroll handle
         window.addEventListener('scroll', this.handleScroll);
     };
+    setRequestingProductOnBackground = () => {
+        // set products loading on background
+        const productsInterval = setInterval(this.loadProductsFromServer, 5000);
+        this.setState({ productsInterval });
+    };
+    setInitialProductLoading = () => {
+        // load initial product on queue
+        const initialLoadInterval = setInterval(this.loadInitialProduct, 1000);
+        this.setState({ initialLoadInterval });
+    };
     loadInitialProduct = () => {
         const { initialLoadInterval, productsQueue } = this.state;
+        // load only product if product queue is not empty
         if (productsQueue.length > 0) {
             this.loadProductsFromQueue();
-            this.loadProducts();
+            this.loadProductsFromServer();
             clearInterval(initialLoadInterval);
         }
     };
     loadProductsFromQueue = () => {
         const { productsQueue } = this.state;
-        console.log(productsQueue, 'queue data');
         if (productsQueue.length === 0) {
             this.setState({hasMore: false});
             return null;
         }
+        // use existing javascript queue feature to manage the display of data
         const data = productsQueue.shift();
-        console.log('queue data', data);
         this.setState({
             products: [...this.state.products, ...data],
             loading: false,
@@ -66,7 +70,7 @@ class App extends React.Component {
     sortProduct = () => {
         let { productsInterval } = this.state;
         clearInterval(productsInterval);
-        productsInterval = setInterval(this.loadProducts, 5000);
+        productsInterval = setInterval(this.loadProductsFromServer, 5000);
         this.setState({
             products: [],
             productsQueue: [],
@@ -78,7 +82,7 @@ class App extends React.Component {
         });
         this.initialLoad();
     };
-    loadProducts = () => {
+    loadProductsFromServer = () => {
         const { pageNumber, sortBy, productsQueue, products, hasMoreProduct } = this.state;
         this.setState({ loading: productsQueue.length === 0 && products.length === 0});
         if (!hasMoreProduct) return null;
@@ -97,6 +101,9 @@ class App extends React.Component {
                     loading: false,
                 })
             });
+    };
+    handleChange = event => {
+        this.setState({[event.target.name]: event.target.value});
     };
     handleScroll = (event) => {
         const {loading, hasMore} = this.state;
@@ -120,9 +127,10 @@ class App extends React.Component {
             ad,
             previousAd: ad,
         });
-    }
+    };
     getRandomAd = () => {
         const { previousAd } = this.state;
+        // make sure that ad will show twice in a row
         let randomAd = previousAd;
         while (previousAd === randomAd) {
             randomAd = Math.floor(Math.random()*1000);
@@ -155,12 +163,15 @@ class App extends React.Component {
                     </div>
                     <div className="container">
                         <div className="row">
-                            <div className="col-md-6">
+                            <div className="col-md-2 sort-by">
+                                Sort By:
+                            </div>
+                            <div className="col-md-4 sort-by">
                                 <select className="form-control" name="sortBy" value={sortBy} onChange={this.handleChange}>
                                     {sortSelection.map(selection => <option key={selection} value={selection}>{selection.toUpperCase()}</option>)}
                                 </select>
                             </div>
-                            <div className="col-md-6">
+                            <div className="col-md-6 sort-by">
                                 <button type="button" className="btn btn-primary" onClick={this.sortProduct}>Sort Product</button>
                             </div>
                         </div>

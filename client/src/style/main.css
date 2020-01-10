@@ -17,6 +17,28 @@
     z-index: 1;
 }
 
+.product-header-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 350px;
+    padding: 10px;
+    text-align: left !important;
+    z-index: 1;
+    background-color: #2E4272 !important;
+    color: #ffffff;
+    border-radius: 10px;
+    border: 2px solid #cccccc;
+}
+
+.sort-by {
+    line-height: 40px;
+    text-align: left;
+}
+
+.products-container {
+    text-align: left !important;
+}
+
 .products {
     border: 0px solid;
     margin: 2px;

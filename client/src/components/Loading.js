@@ -2,24 +2,17 @@ import React from 'react';
 import '../style/main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Loading = () => {
+export const AnimatedLoading = () => {
+    const divs = [];
+    for (let i = 0; i < 12; i++) {
+        divs.push(<div key={i} />);
+    }
     return (
         <div className="container">
             <div className="row">
                 <div className="col-sm-12">
                     <div className="lds-spinner">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
+                        {divs}
                     </div>
                     <br />
                     LOADING ...
@@ -27,6 +20,10 @@ const Loading = () => {
             </div>
         </div>
     );
+};
+
+const Loading = ({ loading }) => {
+    return loading ? <AnimatedLoading /> : null;
 };
 
 export default Loading;

@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import Loading from './Loading';
-import {getRelativeTime, formatPrice, chunkArray} from '../utills/helper';
+import EndOfCatalog from './EndOfCatalog';
+import { getRelativeTime, formatPrice } from '../utills/helper';
 import '../style/main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -41,30 +42,31 @@ class Products extends React.Component {
     };
     render() {
         console.log(this.state);
-        const {loading, products, hasMore, sortBy, sortSelection } = this.state;
-        const loadingElement = loading ? <Loading /> : null;
-        const endOfCatalog = hasMore ? null : <div className="endNote">~ End Of Catalog ~</div>;
+        const {loading, hasMore } = this.state;
+        const loadingElement = loading ? <Loading loading={loading} /> : null;
         return (
             <section className="products">
-                <div className="container">
-                    {/*<div className="row sticky-grid-header">*/}
-                    {/*    <div className="col-md-3">*/}
-                    {/*        Id*/}
-                    {/*    </div>*/}
-                    {/*    <div className="col-md-3">*/}
-                    {/*       Face / Size*/}
-                    {/*    </div>*/}
-                    {/*    <div className="col-md-3">*/}
-                    {/*        Price*/}
-                    {/*    </div>*/}
-                    {/*    <div className="col-md-3">*/}
-                    {/*        DateTime*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
+                <div className="container product-header-sticky">
+                    <div className="row sticky-grid-header">
+                        <div className="col-md-2">
+                            Id
+                        </div>
+                        <div className="col-md-4">
+                           Face / Size
+                        </div>
+                        <div className="col-md-2">
+                            Price
+                        </div>
+                        <div className="col-md-4">
+                            DateTime
+                        </div>
+                    </div>
+                </div>
+                <div className="products-container container">
                     {this.getProducts()}
                 </div>
                 {loadingElement}
-                {endOfCatalog}
+                <EndOfCatalog hasMore={hasMore} />
             </section>
         )
     }
