@@ -115,12 +115,14 @@ class App extends React.Component {
     handleScroll = (event) => {
         const {loading, hasMore} = this.state;
         if (loading || !hasMore) return;
-
-        // Checks that the page has scrolled to the bottom
-        if (
-            window.innerHeight + event.srcElement.documentElement.scrollTop
-            === document.documentElement.offsetHeight
-        ) {
+        // Checks that the page has scrolled to the bottom - make sure that it will work on safari
+        const innerHeight = window.innerHeight;
+        const offSet = document.documentElement.offsetHeight;
+        let scrollTop = event.srcElement.documentElement.scrollTop;
+        if (scrollTop === 0) {
+            scrollTop = event.srcElement.body.scrollTop;
+        }
+        if (innerHeight + scrollTop === offSet) {
             this.loadProductsFromQueue();
             // end scroll at every  20 items
             this.retrieveAd();
