@@ -67,3 +67,23 @@ Try to create a simple and elegant UI for this. You are free to use SASS or any 
 You're right! With something open-ended like this you could easily spend a week polishing and getting it just right. We don't expect you to do this, and we'll do our best to make sure you're not disadvantaged by this.
 
 When we grade this exam we're not giving you a "score out of 100" for how many features you complete. We're trying to get some insight into your process, to see the way you work. So, by all means, spend more time if you want to. But you are also free to leave certain features out and give a written explanation of how you would approach it. The best approach is to spend your time on the features that you think is the best way to show us your strengths and experience.
+
+Setup Instruction
+----
+
+- Clone my repository https://github.com/junmich/product-grid
+- Run npm install
+- Run npm run start-web to compile javascript and run server
+- Open http://localhost:3000 on browser
+
+Setup Client
+----
+- Go to client directory or cd client
+- Run npm install
+- Run npm start (note make sure that the backend server is running)
+
+Additional command
+---
+- npm run build-client - install client dependency and compile javascript using webpack.
+- npm run dev-client - install client dependency and run client server for dev purpose
+- npm run start-web - install client dependency, compile javascript using webpack and run backend server.
