@@ -67,10 +67,22 @@ button {
 
 @media only screen and (max-width: 770px) {
     .content {
-        padding-top: 550px;
+        padding-top: 350px;
     }
     button {
         margin-top: 10px !important;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .content {
+        padding-top: 520px;
+    }
+    button {
+        margin-top: 10px !important;
+    }
+    .product-header-sticky {
+        top: 520px !important;
     }
 }
 

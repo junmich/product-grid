@@ -1,5 +1,5 @@
-import React, {Fragment} from 'react';
-import { Header, Description, Ads, Products } from './components'; // updated import - package components in on import
+import React from 'react';
+import { Header, Description, Ads, Products, Content, SortProduct } from './components'; // updated import - package components in on import
 
 
 import { container } from './style/main'; // demonstrate react js style
@@ -17,8 +17,6 @@ class App extends React.Component {
         pageNumber: 1,
         sortBy: 'id',
         sortSelection: ['id', 'size', 'price'],
-        initialLoadInterval: null,
-        productsInterval: null,
         ad: 1,
         previousAd: 0,
     };
@@ -37,21 +35,21 @@ class App extends React.Component {
     };
     setRequestingProductOnBackground = () => {
         // set products loading on background
-        const productsInterval = setInterval(this.loadProductsFromServer, 5000);
-        this.setState({ productsInterval });
+        clearInterval(this.productsInterval);
+        this.productsInterval = setInterval(this.loadProductsFromServer, 5000);
     };
     setInitialProductLoading = () => {
         // load initial product on queue
-        const initialLoadInterval = setInterval(this.loadInitialProduct, 1000);
-        this.setState({ initialLoadInterval });
+        clearInterval(this.initialLoadInterval);
+        this.initialLoadInterval = setInterval(this.loadInitialProduct, 1000);
     };
     loadInitialProduct = () => {
-        const { initialLoadInterval, productsQueue } = this.state;
+        const { productsQueue } = this.state;
         // load only product if product queue is not empty
         if (productsQueue.length > 0) {
             this.loadProductsFromQueue();
             this.loadProductsFromServer();
-            clearInterval(initialLoadInterval);
+            clearInterval(this.initialLoadInterval);
         }
     };
     loadProductsFromQueue = () => {
@@ -68,18 +66,16 @@ class App extends React.Component {
         });
     };
     sortProduct = () => {
-        let { productsInterval } = this.state;
-        clearInterval(productsInterval);
-        productsInterval = setInterval(this.loadProductsFromServer, 5000);
+        clearInterval(this.productsInterval);
         this.setState({
             products: [],
             productsQueue: [],
             pageNumber: 1,
             loading: true,
             hasMoreProduct: true,
-            hasMore: true,
-            productsInterval
+            hasMore: true
         });
+        this.productsInterval = setInterval(this.loadProductsFromServer, 5000);
         this.initialLoad();
     };
     loadProductsFromServer = () => {
@@ -89,11 +85,8 @@ class App extends React.Component {
         fetch(`/products?_page=${pageNumber}&_limit=100&_sort=${sortBy}`)
             .then(response => response.json())
             .then(data => {
-                console.log('hasmore queue data', data.length);
                 const hasMoreProduct =data.length === 100;
-                // productsQueue.push(data);
                 const newdata = chunkArray(data, 20);
-                console.log('hasmore queue data', data.length);
                 this.setState({
                     productsQueue: [...productsQueue, ...newdata],
                     hasMoreProduct,
@@ -141,7 +134,7 @@ class App extends React.Component {
         return randomAd;
     };
     render() {
-        const { sortSelection, sortBy } = this.state;
+        const { sortSelection, sortBy, ad, loading, hasMore, products } = this.state;
         return (
             <div style={container}>
                 <header className="sticky">
@@ -150,37 +143,33 @@ class App extends React.Component {
                         <div className="row">
                             <div className="col-md-6">
                                 <Description>
-                                    Here you're sure to find a bargain on some of the finest ascii available to purchase. Be sure to peruse our selection of ascii faces in an exciting range of sizes and prices.
+                                    Here you're sure to find a bargain on some of the finest ascii available to purchase.
+                                    Be sure to peruse our selection of ascii faces in an exciting range of sizes and prices.
                                 </Description>
                             </div>
                             <div className="col-md-6">
                                 <Description>
                                     But first, a word from our sponsors:
-                                    <Ads ad={this.state.ad} />
+                                    <Ads ad={ad} />
                                 </Description>
                             </div>
                         </div>
                     </div>
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-md-2 sort-by">
-                                Sort By:
-                            </div>
-                            <div className="col-md-4 sort-by">
-                                <select className="form-control" name="sortBy" value={sortBy} onChange={this.handleChange}>
-                                    {sortSelection.map(selection => <option key={selection} value={selection}>{selection.toUpperCase()}</option>)}
-                                </select>
-                            </div>
-                            <div className="col-md-6 sort-by">
-                                <button type="button" className="btn btn-primary" onClick={this.sortProduct}>Sort Product</button>
-                            </div>
-                        </div>
-                    </div>
+                    <SortProduct
+                        onChange={this.handleChange}
+                        sortBy={sortBy}
+                        sortSelection={sortSelection}
+                        sortProduct={this.sortProduct}
+                    />
                     <hr />
                 </header>
-                <div className="content">
-                    <Products {...this.state} />
-                </div>
+                <Content>
+                    <Products
+                        loading={loading}
+                        hasMore={hasMore}
+                        products={products}
+                    />
+                </Content>
             </div>
         );
     }

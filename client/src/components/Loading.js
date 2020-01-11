@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import '../style/main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -24,6 +25,10 @@ export const AnimatedLoading = () => {
 
 const Loading = ({ loading }) => {
     return loading ? <AnimatedLoading /> : null;
+};
+
+Loading.propTypes = {
+    loading: PropTypes.bool.isRequired,
 };
 
 export default Loading;

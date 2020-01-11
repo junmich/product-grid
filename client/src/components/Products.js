@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import Loading from './Loading';
 import EndOfCatalog from './EndOfCatalog';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { getRelativeTime, formatPrice } from '../utills/helper';
 import '../style/main.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
 
 class Products extends React.Component {
     constructor(props) {
@@ -29,6 +29,7 @@ class Products extends React.Component {
                     </div>
                     <div className="col-md-4">
                         <span style={{ fontSize: product.size }}>{product.face}</span>
+                        <span> | size: {product.size}</span>
                     </div>
                     <div className="col-md-2">
                         {formatPrice(product.price)}
@@ -41,7 +42,6 @@ class Products extends React.Component {
         ))
     };
     render() {
-        console.log(this.state);
         const {loading, hasMore } = this.state;
         const loadingElement = loading ? <Loading loading={loading} /> : null;
         return (
@@ -71,5 +71,11 @@ class Products extends React.Component {
         )
     }
 }
+
+Products.propTypes = {
+    loading: PropTypes.bool.isRequired,
+    hasMore: PropTypes.bool.isRequired,
+    products: PropTypes.array.isRequired,
+};
 
 export default Products;

@@ -1,7 +1,7 @@
 import React from 'react';
-import Countdown from './Countdown';
-import '../style/main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import PropTypes from 'prop-types';
+import '../style/main.css';
 
 class Ads extends React.Component {
     constructor(props) {
@@ -9,7 +9,6 @@ class Ads extends React.Component {
         this.state = {...this.props};
     }
     componentWillReceiveProps(nextProps) {
-        // setInterval(this.retrieveAd, 20000);
         this.setState({
             ...nextProps
         });
@@ -18,11 +17,14 @@ class Ads extends React.Component {
         const { ad } = this.state;
         return (
             <div>
-                {/*<Countdown text={"Ad will change in "} />*/}
                 <img className="rounded mx-auto" alt="" src={`/ads?r=${ad}}`} />
             </div>
         )
     };
 }
+
+Ads.propTypes = {
+    ad: PropTypes.number.isRequired,
+};
 
 export default Ads;
